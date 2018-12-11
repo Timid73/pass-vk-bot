@@ -28,6 +28,7 @@ subprojects {
     }
 }
 
+/*
 dependencies {
     compile 'com.github.jsimone:webapp-runner:8.5.11.3'
 }
@@ -44,4 +45,4 @@ task copyToLib(type: Copy) {
     }
 }
 
-stage.dependsOn(copyToLib)
+stage.dependsOn(copyToLib)*/
