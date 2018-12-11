@@ -24,6 +24,7 @@ public class Application {
         BotRequestHandler botHandler = new BotRequestHandler(apiClient, actor);
 
         Server server = new Server(8080);
+        server.setAttribute("contextPath", "bot");
 
         server.setHandler(new RequestHandler(botHandler, properties.getProperty("confirmationCode")));
 

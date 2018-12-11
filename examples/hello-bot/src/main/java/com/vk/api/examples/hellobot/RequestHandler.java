@@ -1,6 +1,9 @@
 package com.vk.api.examples.hellobot;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -50,7 +53,8 @@ class RequestHandler extends AbstractHandler {
                 case MESSAGE_TYPE:
                     JsonObject object = requestJson.getAsJsonObject("object");
                     int userId = object.getAsJsonPrimitive("user_id").getAsInt();
-                    botRequestHandler.handle(userId);
+                    String message = object.getAsJsonPrimitive("body").getAsString();
+                    botRequestHandler.handle(userId, message);
                     responseBody = OK_BODY;
                     break;
                 default:
