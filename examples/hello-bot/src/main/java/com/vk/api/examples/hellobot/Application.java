@@ -36,19 +36,8 @@ public class Application {
         String token = properties.getProperty("token");
         int serverId = Integer.parseInt(properties.getProperty("serverId"));
         if (groupId == 0 || token == null || serverId == 0) throw new RuntimeException("Params are not set");
-        GroupActor actor = new GroupActor(groupId, token);
 
-        /*try {
-            apiClient.groups()
-                    .setCallbackSettings(actor, serverId)
-                    .execute();
-        } catch (ApiException e) {
-            throw new RuntimeException("Api error during init", e);
-        } catch (ClientException e) {
-            throw new RuntimeException("Client error during init", e);
-        }*/
-
-        return actor;
+        return new GroupActor(groupId, token);
     }
 
     private static Properties readProperties() throws FileNotFoundException {

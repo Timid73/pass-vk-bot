@@ -1,3 +1,7 @@
+plugins {
+    id "io.ratpack.ratpack-groovy" version "1.5.4"
+}
+
 import org.apache.tools.ant.filters.ReplaceTokens
 
 apply plugin: 'application'
@@ -6,6 +10,7 @@ mainClassName = "com.vk.api.examples.hellobot.Main"
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 ext {
@@ -35,4 +40,8 @@ processResources {
             ])
         }
     }
+}
+
+task stage {
+    dependsOn installDist
 }
