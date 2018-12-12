@@ -1,1 +1,1 @@
-web: java -cp build/classes/* HelloWorld
+web: java -cp build/classes/* Application
