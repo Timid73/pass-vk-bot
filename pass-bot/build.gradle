@@ -4,16 +4,21 @@ repositories {
     mavenCentral()
 }
 
+mainClassName = 'com.vk.api.passbot.Application'
+
 jar {
     baseName = 'bot'
     version = '1.0-SNAPSHOT'
-    mainClassName = "com.vk.api.passbot.Application"
+    manifest {
+        attributes(
+                /*'Class-Path': configurations.compile.collect { it.getName() }.join(' '),*/
+                'Main-Class': 'com.vk.api.passbot.Application'
+        )
+    }
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/com.vk.api/sdk
-    compile group: 'com.vk.api', name: 'sdk', version: '0.5.12'
-
+    compile group: 'com.vk.api', name: 'sdk', version: sdkVersion
     compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: log4jVersion
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4jVersion
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4jVersion
