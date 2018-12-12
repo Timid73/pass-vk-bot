@@ -24,8 +24,7 @@ public class Application {
         GroupActor actor = initVkApi(apiClient, readProperties());
         BotRequestHandler botHandler = new BotRequestHandler(apiClient, actor);
 
-        Server server = new Server(8080);
-        server.setAttribute("contextPath", "bot");
+        Server server = new Server(80);
 
         server.setHandler(new RequestHandler(botHandler, properties.getProperty("confirmationCode")));
 
