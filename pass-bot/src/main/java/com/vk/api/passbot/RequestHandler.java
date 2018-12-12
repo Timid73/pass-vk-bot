@@ -34,6 +34,14 @@ class RequestHandler extends AbstractHandler {
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
+        if ("GET".equalsIgnoreCase(request.getMethod())) {
+            response.setContentType("text/html;charset=utf-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+            baseRequest.setHandled(true);
+            response.getWriter().println("hello");
+            return;
+        }
+
         if (!"POST".equalsIgnoreCase(request.getMethod())) {
             throw new ServletException("This method is unsupported");
         }
