@@ -41,3 +41,7 @@ processResources {
         }
     }
 }
+
+task stage {
+    dependsOn build
+}
