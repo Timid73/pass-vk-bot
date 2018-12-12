@@ -1,45 +1,23 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 apply plugin: 'application'
-
-mainClassName = "com.vk.api.passbot.Application"
 
 repositories {
     mavenCentral()
 }
 
-jar{
+jar {
     baseName = 'bot'
     version = '1.0-SNAPSHOT'
-}
-
-ext {
-    groupId = '1'
-    token = 'dummy_token'
-    confirmationCode = 'dummy_confirmation_code'
-    serverId = '1'
+    mainClassName = "com.vk.api.passbot.Application"
 }
 
 dependencies {
-    compile project(':sdk')
+    // https://mvnrepository.com/artifact/com.vk.api/sdk
+    compile group: 'com.vk.api', name: 'sdk', version: '0.5.12'
 
     compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: log4jVersion
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4jVersion
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4jVersion
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
-}
-
-processResources {
-    eachFile { details ->
-        if (details.name.endsWith('.properties')) {
-            details.filter(ReplaceTokens, tokens: [
-                    'groupId'         : groupId,
-                    'token'           : token,
-                    'serverId'        : serverId,
-                    'confirmationCode': confirmationCode,
-            ])
-        }
-    }
 }
 
 task stage {

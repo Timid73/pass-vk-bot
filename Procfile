@@ -1,1 +1,1 @@
-web: java -cp build/classes/* Application
+web: java -jar build/libs/bot-1.0-SNAPSHOT.jar
