@@ -1,3 +1,0 @@
-rootProject.name = 'vk-java-sdk'
-include 'sdk'
-include 'pass-bot'
