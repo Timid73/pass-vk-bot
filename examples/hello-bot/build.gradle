@@ -8,6 +8,11 @@ repositories {
     mavenCentral()
 }
 
+jar{
+    baseName = 'bot'
+    version = '1.0-SNAPSHOT'
+}
+
 ext {
     groupId = '1'
     token = 'dummy_token'
@@ -37,7 +42,6 @@ processResources {
     }
 }
 
-task stage(type: JavaExec) {
-    classpath sourceSets.main.runtimeClasspath
-    main = "com.vk.api.examples.hellobot.Application"
+task stage {
+    dependsOn build
 }
