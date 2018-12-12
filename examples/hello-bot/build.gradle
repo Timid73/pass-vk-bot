@@ -37,6 +37,7 @@ processResources {
     }
 }
 
-task stage {
-    dependsOn run
+task stage(type: JavaExec) {
+    classpath sourceSets.main.runtimeClasspath
+    main = "com.vk.api.examples.hellobot.Application"
 }
