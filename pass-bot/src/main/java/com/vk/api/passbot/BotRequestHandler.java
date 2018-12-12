@@ -1,16 +1,17 @@
-package com.vk.api.examples.hellobot;
-
-import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.GroupActor;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.vk.api.passbot;
 
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.GroupActor;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
 
 class BotRequestHandler {
 

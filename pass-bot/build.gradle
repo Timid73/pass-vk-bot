@@ -2,7 +2,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 apply plugin: 'application'
 
-mainClassName = "com.vk.api.examples.hellobot.Application"
+mainClassName = "com.vk.api.passbot.Application"
 
 repositories {
     mavenCentral()

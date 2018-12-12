@@ -1,14 +1,15 @@
-package com.vk.api.examples.hellobot;
-
-import com.vk.api.sdk.client.VkApiClient;
-import com.vk.api.sdk.client.actors.GroupActor;
-import com.vk.api.sdk.httpclient.HttpTransportClient;
-import org.eclipse.jetty.server.Server;
+package com.vk.api.passbot;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import org.eclipse.jetty.server.Server;
+
+import com.vk.api.sdk.client.VkApiClient;
+import com.vk.api.sdk.client.actors.GroupActor;
+import com.vk.api.sdk.httpclient.HttpTransportClient;
 
 public class Application {
 
