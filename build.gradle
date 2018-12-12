@@ -27,3 +27,7 @@ subprojects {
         testngVersion = '6.11'
     }
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
