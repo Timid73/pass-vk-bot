@@ -1,1 +1,1 @@
-web: java -jar build/libs/bot-1.0-SNAPSHOT.jar
+web: java -jar build/libs/pass-bot-1.0-SNAPSHOT.jar

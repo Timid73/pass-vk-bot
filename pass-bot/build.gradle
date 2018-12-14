@@ -1,21 +1,12 @@
 apply plugin: 'application'
+apply plugin: 'java'
 
 repositories {
     mavenCentral()
 }
 
 mainClassName = 'com.vk.api.passbot.Application'
-
-jar {
-    baseName = 'bot'
-    version = '1.0-SNAPSHOT'
-    manifest {
-        attributes(
-                /*'Class-Path': configurations.compile.collect { it.getName() }.join(' '),*/
-                'Main-Class': 'com.vk.api.passbot.Application'
-        )
-    }
-}
+version '1.0-SNAPSHOT'
 
 dependencies {
     compile group: 'com.vk.api', name: 'sdk', version: sdkVersion
@@ -23,6 +14,17 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4jVersion
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4jVersion
     compile group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.vk.api.passbot.Application'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 task stage {

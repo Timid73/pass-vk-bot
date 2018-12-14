@@ -1,9 +1,6 @@
 subprojects {
     apply plugin: 'java'
 
-    group 'com.vk.api'
-    version '0.5.12'
-
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -27,8 +24,4 @@ subprojects {
         jettyVersion = '9.4.0.v20161208'
         testngVersion = '6.11'
     }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
 }
