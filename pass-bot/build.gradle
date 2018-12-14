@@ -23,11 +23,17 @@ jar {
                 "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
         )
     }
-    from {
+/*    from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    }*/
 }
 
-task stage {
-    dependsOn build
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/lib"
+    from(configurations.compile)
 }
+
+stage.dependsOn(copyToLib)
