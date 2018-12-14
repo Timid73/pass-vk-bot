@@ -19,13 +19,13 @@ dependencies {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'com.vk.api.passbot.Application',
+                'Main-Class': mainClassName,
                 "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
         )
     }
-    from {
+    /*from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    }*/
 }
 
 task stage {
