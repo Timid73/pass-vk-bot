@@ -1,31 +1,41 @@
 package com.vk.api.passbot;
 
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Random;
 
 class BotRequestHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(BotRequestHandler.class);
 
-    private final static String GET = "get";
-    private final static String SET = "set";
+    private final static String[] GET = {"дай", "пароль", "от", "напомни", "get", "at"};
+    private final static String[] VPS = {"vps", "впс", "сервер", "сервера", "виртуалки", "виртуалка"};
+    private final static String[] LK = {"лк", "кабинета", "кабинет", "почта", "почты", "lk", "mail", "email", "office"};
+
+    private final static int BEFORE_HOUR = 11;
+    private final static int AFTER_HOUR = 6;
+
+    private final static String WRONG_TIME_VPS = "Извините. Пароль доступен c " + AFTER_HOUR +":00 до " + BEFORE_HOUR + ":00!";
+    private final static String WRONG_TIME_LK = "Извините. Пароль доступен только по выходным!";
+
+    private final static String RETRY_REQUEST = "Не понял вас!";
+
+    private final static String SECRET_VPS = "axkavtckpwhpojp";
+    private final static String SECRET_LK = "nZO7um3E2W%wA7*tsW%vV6PzFqX50";
 
     private final VkApiClient apiClient;
 
     private final GroupActor actor;
     private final Random random = new Random();
-
-    private Map<Integer, String> passwords = new HashMap<>();
 
     BotRequestHandler(VkApiClient apiClient, GroupActor actor) {
         this.apiClient = apiClient;
@@ -33,29 +43,38 @@ class BotRequestHandler {
     }
 
     void handle(int userId, String message) {
-        if (message.toLowerCase().startsWith(GET)) {
-            getPassword(userId);
-        } else if(message.toLowerCase().startsWith(SET)) {
-            setPassword(userId, message.replace(SET, "").trim());
+        if (isCollect(message, GET)) {
+            if (isCollect(message, VPS)) {
+                getPasswordVps(userId);
+            } else if (isCollect(message, LK)) {
+                getPasswordLk(userId);
+            } else {
+                retryRequest(userId);
+            }
+        } else {
+            retryRequest(userId);
         }
     }
 
-    private void setPassword(int userId, String password) {
-        passwords.put(userId, password);
-        sendMessage(userId, "New password saved!");
+    private void retryRequest(int userId) {
+        sendMessage(userId, RETRY_REQUEST);
     }
 
-    private void getPassword(int userId) {
+    private void getPasswordVps(int userId) {
         LocalTime time = LocalTime.now();
-        if (time.getHour() < 9 || time.getHour() > 22) {
-            String password = passwords.get(userId);
-            if (password == null) {
-                sendMessage(userId, "Password not found!");
-            } else {
-                sendMessage(userId, password);
-            }
+        if (time.getHour() < BEFORE_HOUR && time.getHour() >= AFTER_HOUR) {
+            sendMessage(userId, SECRET_VPS);
         } else {
-            sendMessage(userId, "Sorry! Try later!");
+            sendMessage(userId, WRONG_TIME_VPS);
+        }
+    }
+
+    private void getPasswordLk(int userId) {
+        LocalDateTime time = LocalDateTime.now();
+        if (time.getDayOfWeek().equals(DayOfWeek.SATURDAY) || time.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            sendMessage(userId, SECRET_LK);
+        } else {
+            sendMessage(userId, WRONG_TIME_LK);
         }
     }
 
@@ -71,5 +90,15 @@ class BotRequestHandler {
         } catch (ClientException e) {
             LOG.error("NETWORK ERROR", e);
         }
+    }
+
+    private boolean isCollect(String message, String[] variables) {
+        String[] words = message.split(" ");
+        for (String word: Arrays.asList(words)) {
+            if (Arrays.asList(variables).contains(word.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
